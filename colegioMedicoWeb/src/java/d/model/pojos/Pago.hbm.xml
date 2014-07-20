@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/20/2014 08:41:47 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="d.model.pojos.Pago" table="PAGO" schema="ROOT">
+        <id name="idpago" type="int">
+            <column name="IDPAGO" />
+            <generator class="assigned" />
+        </id>
+        <property name="idcuotames" type="int">
+            <column name="IDCUOTAMES" not-null="true" />
+        </property>
+        <property name="idmedico" type="java.lang.Integer">
+            <column name="IDMEDICO" />
+        </property>
+        <property name="pago" type="java.lang.Integer">
+            <column name="PAGO" />
+        </property>
+        <property name="fechapago" type="date">
+            <column name="FECHAPAGO" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

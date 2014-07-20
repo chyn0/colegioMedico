@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/20/2014 08:41:47 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="d.model.pojos.Cuotaxmedico" table="CUOTAXMEDICO" schema="ROOT">
+        <composite-id name="id" class="d.model.pojos.CuotaxmedicoId">
+            <key-property name="idcuota" type="int">
+                <column name="IDCUOTA" />
+            </key-property>
+            <key-property name="idmedico" type="int">
+                <column name="IDMEDICO" />
+            </key-property>
+        </composite-id>
+        <property name="cuotapagar" type="java.lang.Integer">
+            <column name="CUOTAPAGAR" />
+        </property>
+    </class>
+</hibernate-mapping>
