@@ -19,42 +19,23 @@ import org.hibernate.HibernateException;
  */
 public class ProvinciaDAO {
 
-    public void insertProvincia(Provincia p) {
-        SessionFactory sf = null;
-        Session s = null;
-        Transaction t = null;
-        try {
-            sf = HibernateUtil.getSessionFactory();
-            s = sf.openSession();
-            t = s.beginTransaction();
-            s.save(p);
-            t.commit();
-            s.close();
-        } catch (HibernateException ex) {
-            t.rollback();
-            throw new RuntimeException("No se pudo grabar\n Mensage : " + ex.getMessage());
-        }
-    }
+    Session session = null;
 
-    public String selectProvincia(int id) {
-
-        SessionFactory sf = HibernateUtil.getSessionFactory();
-        Session s = sf.openSession();
-        Provincia p = (Provincia) s.get(Provincia.class, id);
-        s.close();
-        if (p != null) {
-            return "El id de provincia " + p.getIdprovincia() + " de nombre " + p.getNombre();
-        } else {
-            return "La Provincia de id " + id + " no existe!";
-        }
+    public ProvinciaDAO() {
+        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
 
     public List<Provincia> getAllProvincia() {
-        SessionFactory sf = HibernateUtil.getSessionFactory();
-        Session s = sf.openSession();
-        Query query = s.createQuery("from Provincia");
-        List<Provincia> lista = query.list();
-        s.close();
+
+        List<Provincia> lista = null;
+        try {
+            org.hibernate.Transaction tx = session.beginTransaction();
+            Query q = session.createQuery(" from Provincia ");
+            lista = (List<Provincia>) q.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return lista;
+
     }
 }

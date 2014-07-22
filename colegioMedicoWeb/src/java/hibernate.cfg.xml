@@ -9,10 +9,11 @@
     <property name="hibernate.connection.password">root</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="d/model/pojos/Cuota.hbm.xml"/>
-    <mapping resource="d/model/pojos/Pago.hbm.xml"/>
-    <mapping resource="d/model/pojos/Cuotaxmedico.hbm.xml"/>
-    <mapping resource="d/model/pojos/Medico.hbm.xml"/>
-    <mapping resource="d/model/pojos/Provincia.hbm.xml"/>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
+    <mapping resource="cl/model/pojos/Provincia.hbm.xml"/>
+    <mapping resource="cl/model/pojos/Pago.hbm.xml"/>
+    <mapping resource="cl/model/pojos/Cuotaxmedico.hbm.xml"/>
+    <mapping resource="cl/model/pojos/Cuota.hbm.xml"/>
+    <mapping resource="cl/model/pojos/Medico.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
