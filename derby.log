@@ -1,8 +1,8 @@
-Mon Jul 21 21:30:01 ADT 2014 : Apache Derby Network Server - 10.8.3.0 - (1405108) se ha iniciado y está listo para aceptar conexiones en el puerto 1527
+Thu Jul 24 20:17:11 ADT 2014 : Apache Derby Network Server - 10.8.3.0 - (1405108) se ha iniciado y está listo para aceptar conexiones en el puerto 1527
 ----------------------------------------------------------------
-Mon Jul 21 21:30:01 ADT 2014:
- Arrancando Derby versión The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instancia a816c00e-0147-5b79-97fb-ffffcb96f2c1 
-en el directorio de base de datos H:\Users\Chyno\Documents\GitHub\colegioMedico\colegioMedicoDB  con el cargador de clases sun.misc.Launcher$AppClassLoader@307b37df
+Thu Jul 24 20:17:11 ADT 2014:
+ Arrancando Derby versión The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instancia a816c00e-0147-6aa9-fcb9-ffffcb96f2c1 
+en el directorio de base de datos H:\Users\Chyno\Documents\GitHub\colegioMedico\colegioMedicoDB  con el cargador de clases sun.misc.Launcher$AppClassLoader@5889949a
 
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_40-b43
@@ -12,8 +12,3 @@ os.arch=amd64
 os.version=6.1
 derby.system.home=H:\Users\Chyno\Documents\GitHub\colegioMedico
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
-----------------------------------------------------------------
-Tue Jul 22 00:06:14 ADT 2014: cerrando motor de Derby
-----------------------------------------------------------------
-Tue Jul 22 00:06:14 ADT 2014:
-Cerrando la instancia a816c00e-0147-5b79-97fb-ffffcb96f2c1 en el directorio de base de datos H:\Users\Chyno\Documents\GitHub\colegioMedico\colegioMedicoDB con cargador de clases sun.misc.Launcher$AppClassLoader@307b37df
