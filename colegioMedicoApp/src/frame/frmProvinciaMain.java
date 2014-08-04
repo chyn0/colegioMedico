@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import util.CellEditor;
+import util.CellRender;
 import util.CheckBoxRenderer;
 import util.ProvinciaModel;
 
@@ -206,6 +208,8 @@ public class frmProvinciaMain extends javax.swing.JFrame {
         if (cmbOpcion.getSelectedIndex() == 0) {
             pm.getAllProvincia();
             tabla.setModel(pm.getTableModel());
+            tabla.getColumnModel().getColumn(0).setCellEditor(new CellEditor());
+            tabla.getColumnModel().getColumn(0).setCellRenderer(new CellRender());
 //            TableColumn tc = tabla.getColumnModel().getColumn(0);
 //            TableCellEditor tce = new DefaultCellEditor(check);
 //            tc.setCellEditor(tce);
