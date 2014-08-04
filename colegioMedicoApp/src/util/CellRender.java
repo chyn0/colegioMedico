@@ -3,6 +3,8 @@ package util;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
@@ -22,7 +24,7 @@ public class CellRender extends JCheckBox implements TableCellRenderer{
 
     /** Constructor de clase */
     public CellRender() {
-        setOpaque(true);
+        setOpaque(true);      
     }
 
     @Override

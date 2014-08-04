@@ -2,6 +2,8 @@ package util;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -21,7 +23,7 @@ public class CellEditor extends DefaultCellEditor implements TableCellRenderer {
      * Constructor de clase
      */
     public CellEditor() {
-        super(new JCheckBox());
+        super(new JCheckBox());      
     }
 
     /**

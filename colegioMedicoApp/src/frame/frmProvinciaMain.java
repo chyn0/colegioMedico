@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import util.CellEditor;
 import util.CellRender;
 import util.CheckBoxRenderer;
@@ -38,7 +39,7 @@ public class frmProvinciaMain extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
 //        check.setSelected(false);
 //        check.addItemListener(new ItemListener() {
 //
@@ -56,7 +57,6 @@ public class frmProvinciaMain extends javax.swing.JFrame {
 //            }
 //            
 //        });
-
         check.setHorizontalAlignment(JLabel.CENTER);
 
     }
@@ -210,13 +210,6 @@ public class frmProvinciaMain extends javax.swing.JFrame {
             tabla.setModel(pm.getTableModel());
             tabla.getColumnModel().getColumn(0).setCellEditor(new CellEditor());
             tabla.getColumnModel().getColumn(0).setCellRenderer(new CellRender());
-//            TableColumn tc = tabla.getColumnModel().getColumn(0);
-//            TableCellEditor tce = new DefaultCellEditor(check);
-//            tc.setCellEditor(tce);
-//           CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer();
-//           tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(check));
-//           tabla.getColumnModel().getColumn(0).setCellRenderer(checkBoxRenderer);
-          // tabla.updateUI();
 
         } else if (!"CONDICION".equals(txtWhere.getText()) && (cmbOpcion.getSelectedIndex() == 1 || cmbOpcion.getSelectedIndex() == 2)) {
             pm.getProvinciaByCondition(txtWhere.getText(), cmbOpcion.getSelectedIndex());
@@ -262,40 +255,48 @@ public class frmProvinciaMain extends javax.swing.JFrame {
     }//GEN-LAST:event_txtWhereFocusGained
 
     private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
-        ProvinciaFrom panel = new ProvinciaFrom();
-        System.err.println(valor);
-        panel.setValorCombo(valor);
-
-        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
-            System.out.println("ok");
-
-        } else {
-            System.out.println("Cancelled");
+tabla.revalidate();
+tabla.repaint();
+        TableModel tb  = tabla.getModel();
+        for (int i = 0; i < tb.getRowCount(); i++) {
+     
+       //         System.err.println(tabla.getColumnModel().getColumnCount() );           
+     System.out.println(tabla.getValueAt(i, 0) + " " + 0 + " " + i);
+            
         }
+
+//        panel.setValorCombo(valor);
+//
+//        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
+//                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//        if (result == JOptionPane.OK_OPTION) {
+//            System.out.println("ok");
+//
+//        } else {
+//            System.out.println("Cancelled");
+//        }
 
     }//GEN-LAST:event_btnModificaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-      cmbOpcion.setSelectedIndex(0);
+        cmbOpcion.setSelectedIndex(0);
         btnConsultar.doClick();
     }//GEN-LAST:event_formWindowOpened
 
-        /*
-         * JTable uses this method to determine the default renderer/
-         * editor for each cell.  If we didn't implement this method,
-         * then the last column would contain text ("true"/"false"),
-         * rather than a check box.
-         */
-        public Class getColumnClass(int c) {
-            return tabla.getModel().getValueAt(0, c).getClass();
-        }
- 
-        /*
-         * Don't need to implement this method unless your table's
-         * editable.
-         */
+    /*
+     * JTable uses this method to determine the default renderer/
+     * editor for each cell.  If we didn't implement this method,
+     * then the last column would contain text ("true"/"false"),
+     * rather than a check box.
+     */
+    public Class getColumnClass(int c) {
+        return tabla.getModel().getValueAt(0, c).getClass();
+    }
+
+    /*
+     * Don't need to implement this method unless your table's
+     * editable.
+     */
     /**
      * @param args the command line arguments
      */
