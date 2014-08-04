@@ -3,8 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package frame;
+
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import util.CheckBoxRenderer;
+import util.ProvinciaModel;
 
 /**
  *
@@ -12,12 +25,38 @@ package frame;
  */
 public class frmProvinciaMain extends javax.swing.JFrame {
 
+    JCheckBox check = new JCheckBox();
+    ProvinciaModel pm = new ProvinciaModel();
+    ArrayList<String> valor = new ArrayList<>();
+
     /**
      * Creates new form frameProvincia
      */
     public frmProvinciaMain() {
+
         initComponents();
         this.setLocationRelativeTo(null);
+        
+//        check.setSelected(false);
+//        check.addItemListener(new ItemListener() {
+//
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                int x = 0;
+//                if (check.isSelected() == true) {
+//                    x = tabla.getSelectedRow();
+//                    valor.add(tabla.getModel().getValueAt(x, 1) + "");
+//                } else {
+//                    x = tabla.getSelectedRow();
+//                    valor.remove(tabla.getModel().getValueAt(x, 1) + "");
+//                }
+//          
+//            }
+//            
+//        });
+
+        check.setHorizontalAlignment(JLabel.CENTER);
+
     }
 
     /**
@@ -30,99 +69,237 @@ public class frmProvinciaMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        botomPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        mnClose = new javax.swing.JMenuItem();
+        tabla = new javax.swing.JTable(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0 ? true : false;
+            }}
+            ;
+            botomPanel = new javax.swing.JPanel();
+            cmbOpcion = new javax.swing.JComboBox();
+            txtWhere = new javax.swing.JTextField();
+            btnConsultar = new javax.swing.JButton();
+            btnModifica = new javax.swing.JButton();
+            jButton3 = new javax.swing.JButton();
+            btnCerrar = new javax.swing.JButton();
+            jMenuBar1 = new javax.swing.JMenuBar();
+            jMenu1 = new javax.swing.JMenu();
+            mnClose = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowOpened(java.awt.event.WindowEvent evt) {
+                    formWindowOpened(evt);
+                }
+            });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+            tabla.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null}
+                },
+                new String [] {
+                    "Title 1", "Title 2", "Title 3", "Title 4"
+                }
+            ));
+            jScrollPane1.setViewportView(tabla);
 
-        botomPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+            botomPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setText("CONSULTAR");
-        botomPanel.add(jButton1);
+            cmbOpcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODO", "ID", "NOMBRE" }));
+            cmbOpcion.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    cmbOpcionActionPerformed(evt);
+                }
+            });
+            botomPanel.add(cmbOpcion);
 
-        jButton3.setText("AGREGAR");
-        botomPanel.add(jButton3);
+            txtWhere.setForeground(new java.awt.Color(204, 204, 204));
+            txtWhere.setToolTipText("");
+            txtWhere.setPreferredSize(new java.awt.Dimension(100, 26));
+            txtWhere.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent evt) {
+                    txtWhereFocusGained(evt);
+                }
+                public void focusLost(java.awt.event.FocusEvent evt) {
+                    txtWhereFocusLost(evt);
+                }
+            });
+            botomPanel.add(txtWhere);
 
-        btnCerrar.setText("CERRAR");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
-        botomPanel.add(btnCerrar);
+            btnConsultar.setText("CONSULTAR");
+            btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnConsultarActionPerformed(evt);
+                }
+            });
+            botomPanel.add(btnConsultar);
 
-        jMenu1.setText("File");
+            btnModifica.setText("MODIFICA");
+            btnModifica.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnModificaActionPerformed(evt);
+                }
+            });
+            botomPanel.add(btnModifica);
 
-        mnClose.setText("Close");
-        mnClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCloseActionPerformed(evt);
-            }
-        });
-        jMenu1.add(mnClose);
+            jButton3.setText("AGREGAR");
+            botomPanel.add(jButton3);
 
-        jMenuBar1.add(jMenu1);
+            btnCerrar.setText("CERRAR");
+            btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnCerrarActionPerformed(evt);
+                }
+            });
+            botomPanel.add(btnCerrar);
 
-        setJMenuBar(jMenuBar1);
+            jMenu1.setText("File");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                    .addComponent(botomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(botomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            mnClose.setText("Close");
+            mnClose.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    mnCloseActionPerformed(evt);
+                }
+            });
+            jMenu1.add(mnClose);
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+            jMenuBar1.add(jMenu1);
+
+            setJMenuBar(jMenuBar1);
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(19, 19, 19)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1)
+                        .addComponent(botomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(botomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void mnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCloseActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_mnCloseActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        if (cmbOpcion.getSelectedIndex() == 0) {
+            pm.getAllProvincia();
+            tabla.setModel(pm.getTableModel());
+//            TableColumn tc = tabla.getColumnModel().getColumn(0);
+//            TableCellEditor tce = new DefaultCellEditor(check);
+//            tc.setCellEditor(tce);
+//           CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer();
+//           tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(check));
+//           tabla.getColumnModel().getColumn(0).setCellRenderer(checkBoxRenderer);
+          // tabla.updateUI();
+
+        } else if (!"CONDICION".equals(txtWhere.getText()) && (cmbOpcion.getSelectedIndex() == 1 || cmbOpcion.getSelectedIndex() == 2)) {
+            pm.getProvinciaByCondition(txtWhere.getText(), cmbOpcion.getSelectedIndex());
+            tabla.setModel(pm.getTableModel());
+            tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(check));
+            CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer();
+            tabla.getColumnModel().getColumn(0).setCellRenderer(checkBoxRenderer);
+            tabla.updateUI();
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "REVISE LA CONDICION!", "ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void txtWhereFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtWhereFocusLost
+        if ("".equals(txtWhere.getText())) {
+            txtWhere.setForeground(Color.gray);
+            txtWhere.setText("CONDICION");
+        }
+    }//GEN-LAST:event_txtWhereFocusLost
+
+    private void cmbOpcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOpcionActionPerformed
+        if (cmbOpcion.getSelectedIndex() == 0) {
+            txtWhere.setEnabled(false);
+            txtWhere.setText("");
+            valor.clear();
+        } else {
+            txtWhere.setEnabled(true);
+            txtWhere.setText("CONDICION");
+            txtWhere.setForeground(Color.gray);
+            valor.clear();
+        }
+
+    }//GEN-LAST:event_cmbOpcionActionPerformed
+
+    private void txtWhereFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtWhereFocusGained
+        if ("CONDICION".equals(txtWhere.getText())) {
+            txtWhere.setText("");
+            txtWhere.setForeground(Color.black);
+
+        }
+    }//GEN-LAST:event_txtWhereFocusGained
+
+    private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
+        ProvinciaFrom panel = new ProvinciaFrom();
+        System.err.println(valor);
+        panel.setValorCombo(valor);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            System.out.println("ok");
+
+        } else {
+            System.out.println("Cancelled");
+        }
+
+    }//GEN-LAST:event_btnModificaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+      cmbOpcion.setSelectedIndex(0);
+        btnConsultar.doClick();
+    }//GEN-LAST:event_formWindowOpened
+
+        /*
+         * JTable uses this method to determine the default renderer/
+         * editor for each cell.  If we didn't implement this method,
+         * then the last column would contain text ("true"/"false"),
+         * rather than a check box.
+         */
+        public Class getColumnClass(int c) {
+            return tabla.getModel().getValueAt(0, c).getClass();
+        }
+ 
+        /*
+         * Don't need to implement this method unless your table's
+         * editable.
+         */
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new frmProvinciaMain().setVisible(true);
             }
@@ -132,12 +309,15 @@ public class frmProvinciaMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel botomPanel;
     private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnModifica;
+    private javax.swing.JComboBox cmbOpcion;
     private javax.swing.JButton jButton3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem mnClose;
+    private javax.swing.JTable tabla;
+    private javax.swing.JTextField txtWhere;
     // End of variables declaration//GEN-END:variables
 }
