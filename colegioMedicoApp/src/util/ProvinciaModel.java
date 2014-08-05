@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
@@ -32,7 +33,7 @@ public class ProvinciaModel {
     String[] column;
     private final boolean DEBUG = true;
     PreparedStatement preparedStatement = null;
-
+     ArrayList<String> valor = new ArrayList<>();
     String BaseDeDatos = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     String url = "jdbc:sqlserver://localhost;databaseName=Colegio_Medico;user=sa;password=sa;";
 
@@ -182,7 +183,7 @@ public class ProvinciaModel {
 
             data[row][col] = value;
             fireTableCellUpdated(row, col);
-
+            generateValor();
             if (DEBUG) {
                 System.out.println("New value of data:");
                 printDebugData();
@@ -202,6 +203,26 @@ public class ProvinciaModel {
             }
             System.out.println("--------------------------");
         }
-    }
+
+        @SuppressWarnings("empty-statement")
+        private void generateValor() {
+            int numRows = getRowCount();
+            int numCols = getColumnCount();
+            valor.clear();
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    if (j == 1 && data[i][0].toString() == "true") {
+                      
+                        valor.add(data[i][j].toString());
+                    }
+                }
+            }
+        }
+
+       
+        
+    } public ArrayList<String> getValor() {
+            return this.valor;
+        }
 
 }

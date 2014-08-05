@@ -28,7 +28,7 @@ public class ProvinciaFrom extends javax.swing.JPanel {
     public void setValorCombo(ArrayList<String> l){
         
         for (String l1 : l) {
-            System.out.println(l1);
+            jComboBox1.addItem(l1);
         }  
       
     }

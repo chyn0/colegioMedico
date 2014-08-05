@@ -39,24 +39,6 @@ public class frmProvinciaMain extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(null);
-
-//        check.setSelected(false);
-//        check.addItemListener(new ItemListener() {
-//
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                int x = 0;
-//                if (check.isSelected() == true) {
-//                    x = tabla.getSelectedRow();
-//                    valor.add(tabla.getModel().getValueAt(x, 1) + "");
-//                } else {
-//                    x = tabla.getSelectedRow();
-//                    valor.remove(tabla.getModel().getValueAt(x, 1) + "");
-//                }
-//          
-//            }
-//            
-//        });
         check.setHorizontalAlignment(JLabel.CENTER);
 
     }
@@ -208,9 +190,6 @@ public class frmProvinciaMain extends javax.swing.JFrame {
         if (cmbOpcion.getSelectedIndex() == 0) {
             pm.getAllProvincia();
             tabla.setModel(pm.getTableModel());
-//          tabla.getColumnModel().getColumn(0).setCellEditor(new CellEditor());
-//            tabla.getColumnModel().getColumn(0).setCellRenderer(new CellRender());
-
         } else if (!"CONDICION".equals(txtWhere.getText()) && (cmbOpcion.getSelectedIndex() == 1 || cmbOpcion.getSelectedIndex() == 2)) {
             pm.getProvinciaByCondition(txtWhere.getText(), cmbOpcion.getSelectedIndex());
             tabla.setModel(pm.getTableModel());
@@ -255,26 +234,19 @@ public class frmProvinciaMain extends javax.swing.JFrame {
     }//GEN-LAST:event_txtWhereFocusGained
 
     private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
-tabla.revalidate();
-tabla.repaint();
-        TableModel tb  = tabla.getModel();
-        for (int i = 0; i < tb.getRowCount(); i++) {
-     
-       //         System.err.println(tabla.getColumnModel().getColumnCount() );           
-     System.out.println(tabla.getValueAt(i, 0) + " " + 0 + " " + i);
-            
-        }
+ProvinciaFrom panel = new ProvinciaFrom();
+valor = pm.getValor();
+      
+        panel.setValorCombo(valor);
 
-//        panel.setValorCombo(valor);
-//
-//        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
-//                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-//        if (result == JOptionPane.OK_OPTION) {
-//            System.out.println("ok");
-//
-//        } else {
-//            System.out.println("Cancelled");
-//        }
+        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            System.out.println("ok");
+
+        } else {
+            System.out.println("Cancelled");
+        }
 
     }//GEN-LAST:event_btnModificaActionPerformed
 
