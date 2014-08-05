@@ -208,8 +208,8 @@ public class frmProvinciaMain extends javax.swing.JFrame {
         if (cmbOpcion.getSelectedIndex() == 0) {
             pm.getAllProvincia();
             tabla.setModel(pm.getTableModel());
-            tabla.getColumnModel().getColumn(0).setCellEditor(new CellEditor());
-            tabla.getColumnModel().getColumn(0).setCellRenderer(new CellRender());
+//          tabla.getColumnModel().getColumn(0).setCellEditor(new CellEditor());
+//            tabla.getColumnModel().getColumn(0).setCellRenderer(new CellRender());
 
         } else if (!"CONDICION".equals(txtWhere.getText()) && (cmbOpcion.getSelectedIndex() == 1 || cmbOpcion.getSelectedIndex() == 2)) {
             pm.getProvinciaByCondition(txtWhere.getText(), cmbOpcion.getSelectedIndex());
