@@ -6,19 +6,15 @@
 package frame;
 
 import java.awt.Color;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import util.CellEditor;
-import util.CellRender;
+import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
+import static javax.swing.JOptionPane.showConfirmDialog;
 import util.CheckBoxRenderer;
 import util.ProvinciaModel;
 
@@ -66,6 +62,8 @@ public class frmProvinciaMain extends javax.swing.JFrame {
             btnModifica = new javax.swing.JButton();
             jButton3 = new javax.swing.JButton();
             btnCerrar = new javax.swing.JButton();
+            jPanel1 = new javax.swing.JPanel();
+            jLabel2 = new javax.swing.JLabel();
             jMenuBar1 = new javax.swing.JMenuBar();
             jMenu1 = new javax.swing.JMenu();
             mnClose = new javax.swing.JMenuItem();
@@ -90,7 +88,7 @@ public class frmProvinciaMain extends javax.swing.JFrame {
             ));
             jScrollPane1.setViewportView(tabla);
 
-            botomPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+            botomPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
             cmbOpcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODO", "ID", "NOMBRE" }));
             cmbOpcion.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +128,11 @@ public class frmProvinciaMain extends javax.swing.JFrame {
             botomPanel.add(btnModifica);
 
             jButton3.setText("AGREGAR");
+            jButton3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton3ActionPerformed(evt);
+                }
+            });
             botomPanel.add(jButton3);
 
             btnCerrar.setText("CERRAR");
@@ -139,6 +142,11 @@ public class frmProvinciaMain extends javax.swing.JFrame {
                 }
             });
             botomPanel.add(btnCerrar);
+
+            jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+            jLabel2.setText("BUSQUEDA DE PROVINCIA");
+            jPanel1.add(jLabel2);
 
             jMenu1.setText("File");
 
@@ -158,17 +166,20 @@ public class frmProvinciaMain extends javax.swing.JFrame {
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(19, 19, 19)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1)
-                        .addComponent(botomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(botomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
                     .addContainerGap())
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
+                    .addGap(4, 4, 4)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(botomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,10 +204,7 @@ public class frmProvinciaMain extends javax.swing.JFrame {
         } else if (!"CONDICION".equals(txtWhere.getText()) && (cmbOpcion.getSelectedIndex() == 1 || cmbOpcion.getSelectedIndex() == 2)) {
             pm.getProvinciaByCondition(txtWhere.getText(), cmbOpcion.getSelectedIndex());
             tabla.setModel(pm.getTableModel());
-            tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(check));
-            CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer();
-            tabla.getColumnModel().getColumn(0).setCellRenderer(checkBoxRenderer);
-            tabla.updateUI();
+         
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "REVISE LA CONDICION!", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
@@ -234,19 +242,20 @@ public class frmProvinciaMain extends javax.swing.JFrame {
     }//GEN-LAST:event_txtWhereFocusGained
 
     private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
-ProvinciaFrom panel = new ProvinciaFrom();
-valor = pm.getValor();
-      
-        panel.setValorCombo(valor);
-
-        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
-            System.out.println("ok");
-
-        } else {
-            System.out.println("Cancelled");
+        FormularioProvincia panel = new FormularioProvincia(1);
+        valor = pm.getValor();
+        if (valor.isEmpty() || valor.size()>1) {
+            JOptionPane.showMessageDialog(new JFrame(), "ELIJA UN REGISTRO!", "ERROR", JOptionPane.ERROR_MESSAGE            );
+        }else {
+            panel.setValorCombo(valor);
+            int result = showConfirmDialog(null, panel, "MODIFICAR",
+                    OK_CANCEL_OPTION, PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                pm.setUpdateProvincia(panel.getTextNombre(), panel.getTextID());
+                btnConsultar.doClick();
+            }
         }
+
 
     }//GEN-LAST:event_btnModificaActionPerformed
 
@@ -254,6 +263,19 @@ valor = pm.getValor();
         cmbOpcion.setSelectedIndex(0);
         btnConsultar.doClick();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        FormularioProvincia panel = new FormularioProvincia(2);
+        //
+            int result = showConfirmDialog(null, panel, "AÑADIR",
+                    OK_CANCEL_OPTION, PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+             pm.setProvincia(panel.getTextNombre());
+                btnConsultar.doClick();
+            }
+        
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /*
      * JTable uses this method to determine the default renderer/
@@ -290,8 +312,10 @@ valor = pm.getValor();
     private javax.swing.JButton btnModifica;
     private javax.swing.JComboBox cmbOpcion;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem mnClose;
     private javax.swing.JTable tabla;

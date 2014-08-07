@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package util;
 
 import java.sql.Connection;
@@ -21,9 +22,8 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Chyno
  */
-public class ProvinciaModel {
-
-    AbstractTableModel tableModel = null;
+public class MedicoModel {
+     AbstractTableModel tableModel = null;
     Statement statement = null;
     ResultSet resultSet = null;
     Connection connection = null;
@@ -37,42 +37,39 @@ public class ProvinciaModel {
     String BaseDeDatos = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     String url = "jdbc:sqlserver://localhost;databaseName=Colegio_Medico;user=sa;password=sa;";
 
-    public ProvinciaModel() {
-        try {
+    public MedicoModel() {
+         try {
             Class.forName(BaseDeDatos);
             connection = DriverManager.getConnection(url);
         } catch (ClassNotFoundException | SQLException e) {
             if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
-
-    public void close() {
+      public void close() {
         try {
             resultSet.close();
             connection.close();
         } catch (SQLException ex) {
             if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    public void getAllProvincia() {
+      }
+       public void getAllMedico() {
         try {
-            SQL = "exec getAllProvincia";
+            SQL = "exec getAllMedico";
             preparedStatement = connection.prepareStatement(SQL);
             resultSet = preparedStatement.executeQuery();
 
         } catch (SQLException ex) {
             if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
-    public void getProvinciaByCondition(String condicion, Integer opt) {
+        public void getMedicoByCondition(String condicion, Integer opt) {
         if (DEBUG) {
             System.err.println(condicion);
             System.err.println(opt);
@@ -80,10 +77,10 @@ public class ProvinciaModel {
 
         try {
             if (opt == 1) {
-                SQL = "exec dbo.getProvinciaById ";
+                SQL = "exec dbo.getMedicoById ";
 
             } else if (opt == 2) {
-                SQL = "exec dbo.getProvinciaByNombre ";
+                SQL = "exec dbo.getMedicoByNombre ";
             }
             SQL += condicion;
             if (DEBUG) {
@@ -94,34 +91,14 @@ public class ProvinciaModel {
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException ex) {
             if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
-    public void setUpdateProvincia(String nombre, String id) {
+           public void setMedico(String id,String nombre, String dir, String tel, String idp, String estatus, String cuota) {
         try {
 
-            SQL = "exec dbo.updateProvincia " + id + ",'" + nombre + "'";
-
-            if (DEBUG) {
-                System.err.println(SQL);
-            }
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.executeQuery();
-        } catch (SQLException ex) {
-            if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    
-      public void setProvincia(String nombre) {
-        try {
-
-            SQL = "exec dbo.setProvincia '" + nombre + "'";
+            SQL = "exec dbo.setMedico '"  + id + ",'" + nombre + "','"+dir+"','"+tel+"',"+idp+",'"+estatus+"',"+cuota;
 
             if (DEBUG) {
                 System.err.println(SQL);
@@ -137,11 +114,13 @@ public class ProvinciaModel {
     }
     
     
-    public String getUpdateProvincia(String id) {
+        
+        
+    public String getUpdateMedico(String id) {
         String nombre = "";
         try {
 
-            SQL = "exec dbo.getProvinciaById " + id;
+            SQL = "exec dbo.getMedicoById " + id;
 
             if (DEBUG) {
                 System.err.println(SQL);
@@ -151,21 +130,47 @@ public class ProvinciaModel {
 
             while (resultSet.next()) {
 
-                nombre = resultSet.getObject(2).toString();
+                nombre = resultSet.getObject(3).toString();
                 nombre += "|";
-                nombre += resultSet.getObject(3).toString();
+                nombre += resultSet.getObject(4).toString();
+                nombre += "|";
+                nombre += resultSet.getObject(5).toString();
+                nombre += "|";
+                nombre += resultSet.getObject(6).toString();
+                nombre += "|";
+                nombre += resultSet.getObject(7).toString();
+                nombre += "|";
+                nombre += resultSet.getObject(9).toString();
 
             }
 
         } catch (SQLException ex) {
             if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return nombre;
     }
+    public void setUpdateMedico(String id,String nombre, String dir, String tel, String idp, String estatus, String cuota) {
+        try {
 
-    public AbstractTableModel getTableModel() {
+            SQL = "exec dbo.updateMedico " + id + ",'" + nombre + "','"+dir+"','"+tel+"',"+idp+",'"+estatus+"',"+cuota;
+
+            if (DEBUG) {
+                System.err.println(SQL);
+            }
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            if (DEBUG) {
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+    
+ public AbstractTableModel getTableModel() {
 
         try {
             ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -198,13 +203,13 @@ public class ProvinciaModel {
 
         } catch (SQLException ex) {
             if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return tableModel;
     }
 
-    class MyTableModel extends AbstractTableModel {
+   class MyTableModel extends AbstractTableModel {
 
         private final String[] columnNames = column;
         private final Object[][] data = dataFix;
@@ -294,7 +299,7 @@ public class ProvinciaModel {
             valor.clear();
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numCols; j++) {
-                    if (j == 1 && data[i][0].toString() == "true") {
+                    if (j == 1 && "true".equals(data[i][0].toString())) {
 
                         valor.add(data[i][j].toString());
                     }
