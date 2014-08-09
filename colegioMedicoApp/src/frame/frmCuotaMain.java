@@ -6,12 +6,15 @@
 
 package frame;
 
+import colegiomedicoapp.main;
+import util.CuotaModel;
+
 /**
  *
  * @author Chyno
  */
 public class frmCuotaMain extends javax.swing.JFrame {
-
+    CuotaModel cm = new CuotaModel();
     /**
      * Creates new form frameCuotaMain
      */
@@ -100,6 +103,11 @@ public class frmCuotaMain extends javax.swing.JFrame {
         jPanel4.add(jPanel3);
 
         btnCargar.setText("Cargar");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnCargar);
 
         btnCerrar.setText("Cerrar");
@@ -158,11 +166,19 @@ public class frmCuotaMain extends javax.swing.JFrame {
 
     private void mnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCloseActionPerformed
         this.dispose();
+          main m = new main();
+        m.setVisible(true);
     }//GEN-LAST:event_mnCloseActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
      this.dispose();
+       main m = new main();
+        m.setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+     cm.generateCuota(comboMes.getSelectedItem().toString(),comboAno.getSelectedItem().toString());
+    }//GEN-LAST:event_btnCargarActionPerformed
 
     /**
      * @param args the command line arguments

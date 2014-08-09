@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package frame;
 
+import colegiomedicoapp.main;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
@@ -17,6 +17,7 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
 import javax.swing.UIManager;
 import util.CheckBoxRenderer;
+import util.CuotaPagoModel;
 import util.ProvinciaModel;
 
 /**
@@ -24,15 +25,19 @@ import util.ProvinciaModel;
  * @author Chyno
  */
 public class frmCuotaPagoConsultar extends javax.swing.JFrame {
-  JCheckBox check = new JCheckBox();
-    ProvinciaModel pm = new ProvinciaModel();
+
+    Boolean pago = false;
+    CuotaPagoModel cpm = new CuotaPagoModel();
+
     ArrayList<String> valor = new ArrayList<>();
+
     /**
      * Creates new form frmCuotaConsultar
      */
     public frmCuotaPagoConsultar() {
         initComponents();
-      
+            this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -44,15 +49,14 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         botomPanel = new javax.swing.JPanel();
+        checkPagos = new javax.swing.JCheckBox();
         cmbOpcion = new javax.swing.JComboBox();
         txtWhere = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
-        btnPagar = new javax.swing.JButton();
+        btnPago = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable(){
@@ -61,22 +65,33 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
                 return column == 0 ? true : false;
             }}
             ;
-            jPanel3 = new javax.swing.JPanel();
             jMenuBar1 = new javax.swing.JMenuBar();
             jMenu1 = new javax.swing.JMenu();
             mnClose = new javax.swing.JMenuItem();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowOpened(java.awt.event.WindowEvent evt) {
+                    formWindowOpened(evt);
+                }
+            });
 
             jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-            jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-            jLabel2.setText("BUSQUEDA DE CUOTAS");
+            jLabel2.setText("CUOTAS & PAGOS");
             jPanel1.add(jLabel2);
 
             botomPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-            cmbOpcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODO", "ID", "NOMBRE" }));
+            checkPagos.setText("PAGOS");
+            checkPagos.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    checkPagosActionPerformed(evt);
+                }
+            });
+            botomPanel.add(checkPagos);
+
+            cmbOpcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODO", "ID" }));
             cmbOpcion.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     cmbOpcionActionPerformed(evt);
@@ -105,13 +120,14 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
             });
             botomPanel.add(btnConsultar);
 
-            btnPagar.setText("PAGAR");
-            btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            btnPago.setText("PAGAR");
+            btnPago.setEnabled(false);
+            btnPago.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnPagarActionPerformed(evt);
+                    btnPagoActionPerformed(evt);
                 }
             });
-            botomPanel.add(btnPagar);
+            botomPanel.add(btnPago);
 
             btnCerrar.setText("CERRAR");
             btnCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,9 +137,6 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
             });
             botomPanel.add(btnCerrar);
 
-            jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-            tabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
             tabla.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                     {null, null, null, null},
@@ -136,44 +149,6 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
                 }
             ));
             jScrollPane1.setViewportView(tabla);
-
-            javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-            jPanel2.setLayout(jPanel2Layout);
-            jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botomPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE))
-                    .addContainerGap())
-            );
-            jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                    .addContainerGap())
-            );
-
-            jTabbedPane1.addTab("CUOTA", jPanel2);
-
-            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-            jPanel3.setLayout(jPanel3Layout);
-            jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 629, Short.MAX_VALUE)
-            );
-            jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 359, Short.MAX_VALUE)
-            );
-
-            jTabbedPane1.addTab("PAGO", jPanel3);
 
             jMenu1.setText("File");
 
@@ -193,11 +168,24 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botomPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE))
+                    .addContainerGap())
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(48, Short.MAX_VALUE))
             );
 
             pack();
@@ -205,6 +193,8 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
 
     private void mnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCloseActionPerformed
         this.dispose();
+          main m = new main();
+        m.setVisible(true);
     }//GEN-LAST:event_mnCloseActionPerformed
 
     private void cmbOpcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOpcionActionPerformed
@@ -236,37 +226,59 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtWhereFocusLost
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        valor.clear();
+
         if (cmbOpcion.getSelectedIndex() == 0) {
-            pm.getAllProvincia();
-            tabla.setModel(pm.getTableModel());
+            cpm.getAllCuotaPago(pago);
+            tabla.setModel(cpm.getTableModel());
         } else if (!"CONDICION".equals(txtWhere.getText()) && (cmbOpcion.getSelectedIndex() == 1 || cmbOpcion.getSelectedIndex() == 2)) {
-            pm.getProvinciaByCondition(txtWhere.getText(), cmbOpcion.getSelectedIndex());
-            tabla.setModel(pm.getTableModel());
-            tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(check));
-            CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer();
-            tabla.getColumnModel().getColumn(0).setCellRenderer(checkBoxRenderer);
-            tabla.updateUI();
+            cpm.getCuotaPagoById(txtWhere.getText(), pago);
+            tabla.setModel(cpm.getTableModel());
+
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "REVISE LA CONDICION!", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
-    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        FormularioMedico panel = new FormularioMedico(1);
-        //  panel.setValorCombo(valor);
-        int result = showConfirmDialog(null, panel, "Test",
-            OK_CANCEL_OPTION, PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
-            System.out.println(panel.getTextNombre());
-
+    private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
+        FormularioPago panel = new FormularioPago();
+        
+       valor = cpm.getValor();
+      
+        if (valor.isEmpty() ) {
+            JOptionPane.showMessageDialog(new JFrame(), "ELIJA UN REGISTRO!", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
-            System.out.println("Cancelled");
+            panel.setValorCombo(valor);
+            panel.createFactura();
+            int result = showConfirmDialog(null, panel, "MODIFICAR",
+                    OK_CANCEL_OPTION, PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+//                cpm.setUpdateMedico(
+//                        panel.getTextId(), panel.getTextNombre(), panel.getTextDirrecion(), panel.getTextTelefono(), panel.getTextProvincia(), panel.getTextEstatus(), panel.getTextCuota());
+//                btnConsultar.doClick();
+            }
         }
-    }//GEN-LAST:event_btnPagarActionPerformed
+    }//GEN-LAST:event_btnPagoActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void checkPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPagosActionPerformed
+        if (checkPagos.isSelected()) {
+            pago = true;
+        } else {
+            pago = false;
+        }
+        cmbOpcion.setSelectedIndex(0);
+        btnConsultar.doClick();
+
+    }//GEN-LAST:event_checkPagosActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        cmbOpcion.setSelectedIndex(0);
+        btnConsultar.doClick();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -308,16 +320,14 @@ public class frmCuotaPagoConsultar extends javax.swing.JFrame {
     private javax.swing.JPanel botomPanel;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JButton btnPagar;
+    private javax.swing.JButton btnPago;
+    private javax.swing.JCheckBox checkPagos;
     private javax.swing.JComboBox cmbOpcion;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuItem mnClose;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtWhere;

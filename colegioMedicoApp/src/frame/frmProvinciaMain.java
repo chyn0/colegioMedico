@@ -5,6 +5,7 @@
  */
 package frame;
 
+import colegiomedicoapp.main;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
@@ -195,9 +196,12 @@ public class frmProvinciaMain extends javax.swing.JFrame {
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         this.dispose();
+        main m = new main();
+        m.setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+       valor.clear();
         if (cmbOpcion.getSelectedIndex() == 0) {
             pm.getAllProvincia();
             tabla.setModel(pm.getTableModel());

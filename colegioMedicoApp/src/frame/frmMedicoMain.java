@@ -5,6 +5,7 @@
  */
 package frame;
 
+import colegiomedicoapp.main;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
@@ -219,6 +220,8 @@ public class frmMedicoMain extends javax.swing.JFrame {
     }//GEN-LAST:event_txtWhereFocusLost
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        valor.clear();
+        
         if (cmbOpcion.getSelectedIndex() == 0) {
             mm.getAllMedico();
             tabla.setModel(mm.getTableModel());
@@ -251,6 +254,8 @@ public class frmMedicoMain extends javax.swing.JFrame {
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         this.dispose();
+          main m = new main();
+        m.setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -258,8 +263,7 @@ public class frmMedicoMain extends javax.swing.JFrame {
         //
         int result = showConfirmDialog(null, panel, "AÑADIR",
                 OK_CANCEL_OPTION, PLAIN_MESSAGE);
-        if ("".equals(panel.getTextId())
-                || "".equals(panel.getTextNombre())
+        if ("".equals(panel.getTextNombre())
                 || "".equals(panel.getTextDirrecion())
                 || "".equals(panel.getTextTelefono())
                 || "".equals(panel.getTextProvincia())
@@ -268,8 +272,7 @@ public class frmMedicoMain extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(new JFrame(), "COMPLETE EL CAMPO!", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             if (result == JOptionPane.OK_OPTION) {
-                mm.setMedico(
-                        panel.getTextId(), panel.getTextNombre(), panel.getTextDirrecion(), panel.getTextTelefono(), panel.getTextProvincia(), panel.getTextEstatus(), panel.getTextCuota());
+                mm.setMedico(          panel.getTextNombre(), panel.getTextDirrecion(), panel.getTextTelefono(), panel.getTextProvincia(), panel.getTextEstatus(), panel.getTextCuota());
                 btnConsultar.doClick();
             }
         }

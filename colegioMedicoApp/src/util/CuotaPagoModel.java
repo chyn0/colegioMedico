@@ -21,7 +21,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Chyno
  */
-public class MedicoModel {
+public class CuotaPagoModel {
 
     AbstractTableModel tableModel = null;
     Statement statement = null;
@@ -37,7 +37,7 @@ public class MedicoModel {
     String BaseDeDatos = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     String url = "jdbc:sqlserver://localhost;databaseName=Colegio_Medico;user=sa;password=sa;";
 
-    public MedicoModel() {
+    public CuotaPagoModel() {
         try {
             Class.forName(BaseDeDatos);
             connection = DriverManager.getConnection(url);
@@ -59,9 +59,13 @@ public class MedicoModel {
         }
     }
 
-    public void getAllMedico() {
+    public void getAllCuotaPago(Boolean pago) {
         try {
-            SQL = "exec getAllMedico";
+            if (pago) {
+                SQL = "exec getAllPago";
+            } else {
+                SQL = "exec getAllCuota";
+            }
             preparedStatement = connection.prepareStatement(SQL);
             resultSet = preparedStatement.executeQuery();
 
@@ -71,19 +75,18 @@ public class MedicoModel {
             }
         }
     }
-
-    public void getMedicoByCondition(String condicion, Integer opt) {
+  public void getCuotaPagoById(String condicion, Boolean pago) {
         if (DEBUG) {
             System.err.println(condicion);
-            System.err.println(opt);
+            System.err.println(pago);
         }
 
         try {
-            if (opt == 1) {
-                SQL = "exec dbo.getMedicoById ";
+            if (pago) {
+                SQL = "exec dbo.getPagoById ";
 
-            } else if (opt == 2) {
-                SQL = "exec dbo.getMedicoByNombre ";
+            } else {
+                SQL = "exec dbo.getCuotaById ";
             }
             SQL += condicion;
             if (DEBUG) {
@@ -98,78 +101,34 @@ public class MedicoModel {
             }
         }
     }
-
-    public void setMedico( String nombre, String dir, String tel, String idp, String estatus, String cuota) {
+  
+  
+  
+  
+      public void getFactura(Boolean pago) {
         try {
-
-            SQL = "exec dbo.setMedico '" + nombre + "','" + dir + "','" + tel + "'," + idp + ",'" + estatus + "'," + cuota;
-
-            if (DEBUG) {
-                System.err.println(SQL);
-            }
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.executeQuery();
-        } catch (SQLException ex) {
-            if (DEBUG) {
-                Logger.getLogger(ProvinciaModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    public String getUpdateMedico(String id) {
-        String nombre = "";
-        try {
-
-            SQL = "exec dbo.getMedicoById " + id;
-
-            if (DEBUG) {
-                System.err.println(SQL);
+            if (pago) {
+                SQL = "exec getAllPago";
+            } else {
+                SQL = "exec getAllCuota";
             }
             preparedStatement = connection.prepareStatement(SQL);
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-
-                nombre = resultSet.getObject(3).toString();
-                nombre += "|";
-                nombre += resultSet.getObject(4).toString();
-                nombre += "|";
-                nombre += resultSet.getObject(5).toString();
-                nombre += "|";
-                nombre += resultSet.getObject(6).toString();
-                nombre += "|";
-                nombre += resultSet.getObject(7).toString();
-                nombre += "|";
-                nombre += resultSet.getObject(9).toString();
-
-            }
-
         } catch (SQLException ex) {
             if (DEBUG) {
                 Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return nombre;
     }
-
-    public void setUpdateMedico(String id, String nombre, String dir, String tel, String idp, String estatus, String cuota) {
-        try {
-
-            SQL = "exec dbo.updateMedico " + id + ",'" + nombre + "','" + dir + "','" + tel + "'," + idp + ",'" + estatus + "'," + cuota;
-
-            if (DEBUG) {
-                System.err.println(SQL);
-            }
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.executeQuery();
-        } catch (SQLException ex) {
-            if (DEBUG) {
-                Logger.getLogger(MedicoModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
+  
+  public  ArrayList<String> createFactura(ArrayList<String> l){
+  
+      
+      
+      return l;
+  }
+  
 
     public AbstractTableModel getTableModel() {
 
